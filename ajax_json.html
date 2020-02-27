@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AJAX JSON</title>
+    <!-- Font Awesome -->
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"
+    />
+    <!-- Google Fonts -->
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
+    />
+    <!-- Bootstrap core CSS -->
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <!-- Material Design Bootstrap -->
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.12.0/css/mdb.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      @media (max-width: 320px) {
+        #git {
+          font-size: 30px;
+        }
+      }
+      @media (max-width: 480px) {
+        #git {
+          font-size: 30px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <p class="display-4 text-center" id="git">GITHUB USER DETAILS</p>
+    <div class="container" id="user">
+      <div class="text-center">
+        <button id="btn" class="btn btn-info mt-3">Get Github User</button>
+      </div>
+    </div>
+    <script>
+      // add event
+      document.querySelector("#btn").addEventListener("click", getUser);
+      function getUser() {
+        // create xhr
+        const xhr = new XMLHttpRequest();
+        // open file
+        xhr.open("get", "https://api.github.com/users", true);
+        // onload
+        xhr.onload = () => {
+          if (xhr.status == 200) {
+            //console.log(xhr.responseText);
+            let json = JSON.parse(xhr.responseText);
+            console.log(json);
+            let output = "";
+            for (i in json) {
+              output += `
+              <div class="row">
+              <div class="col-md-2 col-lg-2 col-xl-2"><!--empty--></div>
+              <div class="col-md-8 col-sm-12 col-lg-8 col-xl-8">
+                <div class="card m-3">
+                <div class="view overlay">
+                    <img class="card-img-top" width="300"height="300" src="${json[i].avatar_url}"
+                    alt="Card image cap">
+                </div>
+                <div class="card-body text-center">
+                    <h3 class="card-title">Profile Name : ${json[i].login}</h3>
+                    <p class="card-text">Profile Adress :${json[i].url}</p>
+                    <a href="${json[i].html_url}" target='_blank' class="btn btn-primary">Open Profile</a>
+                </div>
+                </div>
+            </div>
+            <div class="col-md-2 col-lg-2 col-xl-2"><!--empty--></div>
+            </div>`;
+            }
+            document.querySelector("#user").innerHTML = output;
+          } else {
+            console.log("Not Found");
+          }
+        };
+        // send request
+        xhr.send();
+      }
+    </script>
+    <!-- JQuery -->
+    <script
+      type="text/javascript"
+      src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"
+    ></script>
+    <!-- Bootstrap tooltips -->
+    <script
+      type="text/javascript"
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"
+    ></script>
+    <!-- Bootstrap core JavaScript -->
+    <script
+      type="text/javascript"
+      src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/js/bootstrap.min.js"
+    ></script>
+    <!-- MDB core JavaScript -->
+    <script
+      type="text/javascript"
+      src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.12.0/js/mdb.min.js"
+    ></script>
+  </body>
+</html>

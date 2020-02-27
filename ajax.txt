@@ -1,0 +1,4 @@
+ajax is asynchronous javascript and xml
+set of web technology
+send and receive data asynchronously
+does interface with current webpage(browser)
